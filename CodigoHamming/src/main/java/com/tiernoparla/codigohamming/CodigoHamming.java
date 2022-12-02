@@ -55,6 +55,12 @@ public class CodigoHamming {
             System.out.print(msgHammingModificado[i]);
         }
 
+        ///////////////
+        /// punto 4////
+        ///////////////
+
+        reciever(msgHammingModificado);
+
     }// main
 
     static int calcularBitsRed(int tamaño) {
@@ -175,6 +181,116 @@ public class CodigoHamming {
         }
 
         return codigoHamming;
+    }
+
+    static void reciever(int[] msg) {
+        //No he conseguido hacer que funcione todavia, falta depuración.
+        int contador = 0;
+        int bit0 = 0, bit1 = 0, bit2 = 0, bit4 = 0, bit8 = 0, bit16 = 0;
+        int marca = 0;
+        boolean esCorrecto = true;
+
+        //////////// bit paridad ///////////////////////////////////////////////
+        for (int i = 0; i < msg.length; i++) {
+            if (msg[1] == 1 || msg[2] == 1 || msg[4] == 1 || msg[8] == 1 || msg[16] == 1) {
+                contador++;
+            }
+        }
+        // si el numero de 1's es par y el bit de paridad es 0 es correcto. Si es impar
+        // y el bit de paridad es 1, es correcto.
+        if ((contador % 2 == 0 && msg[0] == 0) || (contador % 2 != 0 && msg[0] == 1)) {
+            esCorrecto = true;
+        } else {
+            esCorrecto = false;
+            bit0 = 0;
+        }
+
+        //////////// bit paridad 1 ///////////////////////////////////////////////
+        contador = 0;
+        for (int i = 0; i < msg.length; i++) {
+            if (msg[3] == 1 || msg[5] == 1 || msg[7] == 1 || msg[9] == 1 || msg[11] == 1 || msg[13] == 1 || msg[15] == 1
+                    || msg[17] == 1 || msg[19] == 1 || msg[21] == 1) {
+                contador++;
+            }
+        }
+        // si el numero de 1's es par y el bit de paridad es 0 es correcto. Si es impar
+        // y el bit de paridad es 1, es correcto.
+        if ((contador % 2 == 0 && msg[1] == 0) || (contador % 2 != 0 && msg[1] == 1)) {
+
+        } else {
+            marca++;
+            bit1 = 1;
+        }
+
+        ///////// bit paridad 2//////////////////////////////////////////////////////
+        contador = 0;
+        for (int i = 0; i < msg.length; i++) {
+            if (msg[3] == 1 || msg[6] == 1 || msg[7] == 1 || msg[10] == 1 || msg[11] == 1 || msg[14] == 1
+                    || msg[15] == 1 || msg[18] == 1 || msg[19] == 1) {
+                contador++;
+            }
+        }
+        if ((contador % 2 == 0 && msg[2] == 0) || (contador % 2 != 0 && msg[2] == 1)) {
+
+        } else {
+            marca++;
+            bit2 = 2;
+        }
+        /////// bit paridad 4 ////////////////////////////////////////////////////
+
+        contador = 0;
+        for (int i = 0; i < msg.length; i++) {
+            if (msg[5] == 1 || msg[6] == 1 || msg[7] == 1 || msg[12] == 1 || msg[13] == 1 || msg[14] == 1
+                    || msg[15] == 1 || msg[20] == 1 || msg[21] == 1) {
+                contador++;
+            }
+        }
+        if ((contador % 2 == 0 && msg[4] == 0) || (contador % 2 != 0 && msg[4] == 1)) {
+
+        } else {
+            marca++;
+            bit4 = 4;
+        }
+        /////// bit paridad 8 ////////////////////////////////////////////////////
+
+        contador = 0;
+        for (int i = 0; i < msg.length; i++) {
+            if (msg[9] == 1 || msg[10] == 1 || msg[11] == 1 || msg[12] == 1 || msg[13] == 1 || msg[14] == 1
+                    || msg[15] == 1) {
+                contador++;
+            }
+        }
+        if ((contador % 2 == 0 && msg[8] == 0) || (contador % 2 != 0 && msg[8] == 1)) {
+
+        } else {
+            marca++;
+            bit8 = 8;
+        }
+
+        /////// bit paridad 16 ////////////////////////////////////////////////////
+
+        contador = 0;
+        for (int i = 0; i < msg.length; i++) {
+            if (msg[17] == 1 || msg[18] == 1 || msg[19] == 1 || msg[20] == 1 || msg[21] == 1) {
+                contador++;
+            }
+        }
+        if ((contador % 2 == 0 && msg[16] == 0) || (contador % 2 != 0 && msg[16] == 1)) {
+
+        } else {
+            marca++;
+            bit16 = 16;
+        }
+
+        if (marca > 0) {
+            System.out.println();
+            System.out.println("Hay un error en el bit " + (bit1 + bit2 + bit4 + bit8 + bit16));
+        } else if (marca > 0 && esCorrecto) {
+            System.out.println("hay dos fallos");
+        } else {
+            System.out.println();
+            System.out.println("El código es igual que el original.");
+        }
     }
 
 }// class
