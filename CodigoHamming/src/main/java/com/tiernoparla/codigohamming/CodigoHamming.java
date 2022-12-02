@@ -22,9 +22,11 @@ public class CodigoHamming {
             System.out.print(mensage[i]);
         }
         System.out.println();
+
         ///////////////
         //// punto 2////
         ///////////////
+
         bitsParidad = calcularBitsRed(tamaño);
         System.out.print("bits paridad " + bitsParidad);
 
@@ -38,6 +40,19 @@ public class CodigoHamming {
             if (i == 0 || i == 1 || i == 2 || i == 4 || i == 8 || i == 16)
                 System.out.print("->");
             System.out.print(msgHamming[i]);
+        }
+        ///////////////
+        /// punto 3////
+        ///////////////
+
+        int[] msgHammingModificado = new int[msgHamming.length];
+        msgHammingModificado = noise(msgHamming);
+
+        System.out.println();
+        for (int i = 0; i < msgHammingModificado.length; i++) {
+            if (i == 0 || i == 1 || i == 2 || i == 4 || i == 8 || i == 16)
+                System.out.print("->");
+            System.out.print(msgHammingModificado[i]);
         }
 
     }// main
@@ -146,6 +161,20 @@ public class CodigoHamming {
         }
 
         return msg;
+    }
+
+    static int[] noise(int[] codigoHamming) {
+        int indice;
+
+        for (int i = 0; i < 2; i++) {
+            indice = num.nextInt(codigoHamming.length - 1);
+            if (indice == 0 || indice == 1 || indice == 2 || indice == 4 || indice == 8 || indice == 16) {
+                continue;
+            } else
+                codigoHamming[indice] = num.nextInt(2);
+        }
+
+        return codigoHamming;
     }
 
 }// class
