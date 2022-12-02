@@ -5,16 +5,17 @@ import java.util.Scanner;
 import java.lang.Math;
 
 public class CodigoHamming {
+    static Scanner scanea = new Scanner(System.in);
+    static Random num = new Random();
 
     public static void main(String[] args) {
         int bitsParidad;
 
         // Primera parte del código hamming con un scanner, un random y un array.
-        Scanner scanea = new Scanner(System.in);
+
         System.out.println("Introduce un número: ");
         int tamaño = scanea.nextInt();
 
-        Random num = new Random();
         int[] mensage = new int[tamaño];
         for (int i = 0; i < tamaño; i++) {
             mensage[i] = num.nextInt(2);
